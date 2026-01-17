@@ -1,17 +1,17 @@
-version: '3.8'
+
 services:
   minio:
-    image: minio/minio:latest
+    image: minio/minio:latest # user version number if production
     container_name: minio
     ports:
       - "9000:9000"   # API port
       - "9001:9001"   # WebUI port
     environment:
-      MINIO_ROOT_USER: minioadmin
-      MINIO_ROOT_PASSWORD: minioadmin123
+      MINIO_ROOT_USER: minioadmin #change it in production
+      MINIO_ROOT_PASSWORD: minioadmin123 #change it in production
       MINIO_CACHE_DRIVES: /data/cache
-      MINIO_CACHE_EXPIRY: 90
-      MINIO_CACHE_QUOTA: 80
+      MINIO_CACHE_EXPIRY: 90      # Cache expiry in days
+      MINIO_CACHE_QUOTA: 80       # Cache quota percentage
     volumes:
       - ./minio_data:/data  # Local directory for data
     command: server /data --console-address ":9001"

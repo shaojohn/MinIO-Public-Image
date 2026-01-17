@@ -71,6 +71,24 @@ Replace `<version-id>` with the actual version ID you want to restore.
 
 For more details, see the [MinIO Versioning documentation](https://min.io/docs/minio/linux/reference/minio-mc/mc-version.html).
 
+## 8. Remove Object Versions Older Than 1 Year
+
+To delete object versions in the `images` bucket that are older than one year (365 days), use MinIO Client (mc) with a shell command:
+
+```bash
+# List all versions older than 365 days and delete them
+mc ls --versions --recursive myminio/images | \
+  awk '$1 < strftime("%Y-%m-%d", systime()-365*24*60*60) {print $NF}' | \
+  while read version; do
+    mc rm myminio/images/"$version"
+  done
+```
+
+- Make sure to verify the command deletes the correct versions. Backup important data before running.
+- You can automate this cleanup with a cron job.
+
+For more details and safe cleanup options, see the [MinIO documentation](https://min.io/docs/minio/linux/reference/minio-mc/mc-rm.html).
+
 ## References
 - [MinIO Bucket Policies](https://min.io/docs/minio/linux/reference/minio-mc/mc-anonymous-set.html)
 - [MinIO Versioning](https://min.io/docs/minio/linux/reference/minio-mc/mc-version.html)

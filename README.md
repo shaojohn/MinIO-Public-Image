@@ -9,7 +9,7 @@ MinIO is a high-performance, S3-compatible object storage server. This guide exp
 1. **Clone or create the `docker-compose.yml` file:**
 
 ```yaml
-version: '3.8'
+
 services:
   minio:
     image: minio/minio:latest
